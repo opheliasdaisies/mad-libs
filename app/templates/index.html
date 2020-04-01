@@ -3,6 +3,17 @@
         <title>{{ title }} - Mad Libs</title>
     </head>
     <body>
-        <h1>Hello! {{ text.text }}</h1>
+        <h1>Hello! Welcome to Mad Libs Generator!</h1>
+        <form action='' method='post' novalidate>
+
+            <p>
+                {{ form.user_input.label }}
+                {{ form.user_input() }}
+            </p>
+
+            <p>
+            {{form.submit()}}
+            </p>
+        </form>
     </body>
 </html>
