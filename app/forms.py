@@ -7,5 +7,5 @@ class TextInputForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class WordForm(FlaskForm):
-    user_input = StringField('Enter your text here', validators=[DataRequired()])
+    matched_word = StringField('Write your own', validators=[DataRequired()])
     submit = SubmitField('Submit')

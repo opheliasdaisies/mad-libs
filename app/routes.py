@@ -14,8 +14,14 @@ def index():
         return resp
     return render_template('index.html', title='Home', form=form)
 
-@app.route('/word_list', methods=['GET'])
+@app.route('/word_list', methods=['GET', 'POST'])
 def word_list():
+    form = WordForm()
+    if form.validate_on_submit():
+        text = form.matched_word.data
+        resp = make_response(redirect('revamped.html'))
+        resp.set_cookie('article_text', article_text)
+        return resp
     text = request.cookies.get('text')
     redacted = {
         'coronavirus': 'noun',
@@ -46,18 +52,28 @@ def word_list():
     }
     words_to_be_redacted = redacted.keys()
     text_list = text.split(' ')
-    text_set = list(set(text_list))
-    matched_words = []
+    matched_words = {}
     for word in words_to_be_redacted:
-        for text_word in text_set:
-            if word == text_word:
-
-                matched_words.append(word)
-                # text_set.remove(text_word)
+        for index, text_word in enumerate(text_list):
+            if word.lower() == text_word.lower():
+                matched_words[index] = redacted[word]
     print('matched_words', matched_words)
+    resp = make_response(render_template('word_list.html', title='Word List', form=form, matched_words=matched_words))
+    # resp.set_cookie('matched_words', matched_words)
+    return resp
 
+@app.route('/revamped', methods=['GET'])
+def revamped():
+    article_text=request.cookies.get('article_text')
+    render_template('revamped.html', article_text=article_text)
 
-    return render_template('word_list.html', title='Word List', form=WordForm())
+# @app.route('/word_list', methods=['POST'])
+# def word_list():
+#     if form.validate_on_submit():
+#         text = form.matched_word.data
+#         resp = make_response(redirect('revamped.html'))
+#         resp.set_cookie('article_text', article_text)
+#         return resp
 
 #POST / submit form & redact words list
 #GET /libs form of redcacted words
