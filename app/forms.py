@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, FieldList, FormField
 from wtforms.validators import DataRequired
 
 class TextInputForm(FlaskForm):
@@ -7,5 +7,5 @@ class TextInputForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class WordForm(FlaskForm):
-    matched_word = StringField('Write your own', validators=[DataRequired()])
+    write_your_own = FieldList(StringField(validators=[DataRequired()]), min_entries=1)
     submit = SubmitField('Submit')

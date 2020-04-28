@@ -5,10 +5,10 @@
     <body>
         <h1>Thank you for submitting your text! Please input your words here.</h1>
         <form action='' method='post' novalidate>
-            {% for word_index in matched_words.keys() %}
+            {% for word_index in indexes %}
             <p>
-                {{ form.matched_word.label }} {{ matched_words[word_index] }}
-                {{ form.matched_word(id=word_index) }}
+                {{ form.write_your_own.label }} {{ matched_words[word_index] }}
+                {{ form.write_your_own(id=word_index) }}
             </p>
             {% endfor %}
 

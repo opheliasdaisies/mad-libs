@@ -58,7 +58,8 @@ def word_list():
             if word.lower() == text_word.lower():
                 matched_words[index] = redacted[word]
     print('matched_words', matched_words)
-    resp = make_response(render_template('word_list.html', title='Word List', form=form, matched_words=matched_words))
+    keys = list(matched_words.keys())
+    resp = make_response(render_template('word_list.html', title='Word List', form=form, matched_words=matched_words, indexes=keys))
     # resp.set_cookie('matched_words', matched_words)
     return resp
 
