@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, make_response
 from app import app
-from app.forms import TextInputForm, WordForm
+from app.forms import TextInputForm
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -14,14 +14,8 @@ def index():
         return resp
     return render_template('index.html', title='Home', form=form)
 
-@app.route('/word_list', methods=['GET', 'POST'])
+@app.route('/word_list', methods=['GET'])
 def word_list():
-    form = WordForm()
-    if form.validate_on_submit():
-        text = form.matched_word.data
-        resp = make_response(redirect('revamped.html'))
-        resp.set_cookie('article_text', article_text)
-        return resp
     text = request.cookies.get('text')
     redacted = {
         'coronavirus': 'noun',
@@ -61,15 +55,28 @@ def word_list():
     print('matched_words', matched_words)
     keys = list(matched_words.keys())
 
-    forms = [WordForm() for word in matched_words]
-    resp = make_response(render_template('word_list.html', title='Word List', form1=WordForm(), form2=WordForm(), matched_words=matched_words, indexes=keys))
+    resp = make_response(render_template('word_list.html', title='Word List', matched_words=matched_words, indexes=keys))
     # resp.set_cookie('matched_words', matched_words)
+    return resp
+
+@app.route('/word_list', methods=['POST'])
+def word_list_post():
+    data = request.form
+    original_text = request.cookies.get('text')
+    # TODO: replace words in original text
+    # TODO: save new text in cookie
+
+
+    # if form.validate_on_submit():
+    # text = form.matched_word.data
+    resp = make_response(redirect('/revamped'))
+    # resp.set_cookie('article_text', article_text)
     return resp
 
 @app.route('/revamped', methods=['GET'])
 def revamped():
-    article_text=request.cookies.get('article_text')
-    render_template('revamped.html', article_text=article_text)
+    article_text=request.cookies.get('text')
+    return render_template('revamped.html', article_text=article_text)
 
 # @app.route('/word_list', methods=['POST'])
 # def word_list():
