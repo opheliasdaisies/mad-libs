@@ -4,16 +4,18 @@
     </head>
     <body>
         <h1>Thank you for submitting your text! Please input your words here.</h1>
-        <form action='' method='post' novalidate>
-            {% for word_index in indexes %}
-            <p>
-                {{ form.write_your_own.label }} {{ matched_words[word_index] }}
-                {{ form.write_your_own(id=word_index) }}
-            </p>
-            {% endfor %}
+        <form action='/word_list' method='post' novalidate>
+            <ul>
+                {% for word_index in indexes %}
+                    <li>
+                        <label for={{ word_index }}>Write a {{ matched_words[word_index] }}: </label>
+                        <input type='text' id={{ word_index }} name={{ word_index }}/>
+                    </li>
+                {% endfor %}
+            </ul>
 
             <p>
-            {{form.submit()}}
+            <button type='submit'>SUBMIT YOUR FORM!</button>
             </p>
         </form>
     </body>
