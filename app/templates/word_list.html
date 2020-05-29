@@ -9,7 +9,7 @@
                 {% for word_index in indexes %}
                     <li>
                         <label for={{ word_index }}>Write a {{ matched_words[word_index] }}: </label>
-                        <input type='text' id={{ word_index }} name={{ word_index }}/>
+                        <input type='text' id={{ word_index }} name='{{ word_index }}'/>
                     </li>
                 {% endfor %}
             </ul>

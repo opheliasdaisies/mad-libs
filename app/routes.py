@@ -63,14 +63,13 @@ def word_list():
 def word_list_post():
     data = request.form
     original_text = request.cookies.get('text')
-    # TODO: replace words in original text
-    # TODO: save new text in cookie
+    text_arr = original_text.split(' ')
+    for word in data:
+        text_arr[int(word)] = data[word]
 
-
-    # if form.validate_on_submit():
-    # text = form.matched_word.data
+    new_text = ' '.join(text_arr)
     resp = make_response(redirect('/revamped'))
-    # resp.set_cookie('article_text', article_text)
+    resp.set_cookie('text', new_text)
     return resp
 
 @app.route('/revamped', methods=['GET'])
