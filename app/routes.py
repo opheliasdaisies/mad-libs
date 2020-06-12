@@ -56,7 +56,6 @@ def word_list():
     keys = list(matched_words.keys())
 
     resp = make_response(render_template('word_list.html', title='Word List', matched_words=matched_words, indexes=keys))
-    # resp.set_cookie('matched_words', matched_words)
     return resp
 
 @app.route('/word_list', methods=['POST'])
@@ -76,25 +75,3 @@ def word_list_post():
 def revamped():
     article_text=request.cookies.get('text')
     return render_template('revamped.html', article_text=article_text)
-
-# @app.route('/word_list', methods=['POST'])
-# def word_list():
-#     if form.validate_on_submit():
-#         text = form.matched_word.data
-#         resp = make_response(redirect('revamped.html'))
-#         resp.set_cookie('article_text', article_text)
-#         return resp
-
-#POST / submit form & redact words list
-#GET /libs form of redcacted words
-#POST /libs fill in the missing words
-#GET /final display full text with replaced words
-
-
-# from flask import make_response
-
-# @app.route('/')
-# def index():
-#     resp = make_response(render_template(...))
-#     resp.set_cookie('username', 'the username')
-#     return resp
